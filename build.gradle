@@ -1,24 +1,37 @@
-plugins {
-    id 'java'
-    id 'org.jetbrains.intellij' version '0.4.16'
+buildscript {
+    repositories {
+        maven {url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
+    }
 }
 
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.10'
+}
+
+apply plugin:'java'
 group 'org.plugin.test'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+//    classpath "org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.5.0-SNAPSHOT"
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2019.3.2'
+    version 'IC-2019.2.2'
+    pluginName 'PluginTest'
+    updateSinceUntilBuild false
+    //fuck 加上这句就消除了PsiClass异常 不知为何
+    plugins = ["org.intellij.scala:2019.2.2", 'java']
 }
 patchPluginXml {
     changeNotes """
