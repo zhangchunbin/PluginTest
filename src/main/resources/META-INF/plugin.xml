@@ -17,10 +17,19 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
-        <action id="PluginTest.TestAction" class="action.TestAction" text="pluginTest"
-            description="TestAction">
-            <add-to-group group-id="CodeMenu" anchor="last" />
-        </action>
+
+
+        <!-- Add multiple actions to be group -->
+        <group id="PluginTest.group.PluginAssistant" text="PluginAssistant" popup="true">
+            <add-to-group group-id="NewGroup" anchor="last"/>
+            <action id="PluginTest.TestAction" class="action.TestAction" text="pluginTest"
+                    description="TestAction">
+<!--                <add-to-group group-id="CodeMenu" anchor="last"/>-->
+            </action>
+            <action id="PluginTest.VelocityAction" class="action.VelocityAction" text="VelocityAction"
+                    description="VelocityAction">
+<!--                <add-to-group group-id="CodeMenu" anchor="last"/>-->
+            </action>
+        </group>
     </actions>
 </idea-plugin>
