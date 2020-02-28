@@ -6,8 +6,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.jetbrains.plugins.scala.lang.psi.api.ScalaFile;
-import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef.ScClass;
 import utils.CodeMakerUtil;
 
 import java.util.Collections;
@@ -101,11 +99,6 @@ public class ClassEntry {
             classEntry.setFields(CodeMakerUtil.getFields(psiClass));
             classEntry.setImportList(CodeMakerUtil.getImportList((PsiJavaFile) psiFile));
             classEntry.setAllFields(CodeMakerUtil.getAllFields(psiClass));
-        }
-        else if(psiClass instanceof ScClass) {
-            ScClass scalaClass = (ScClass) psiClass;
-            classEntry.setFields(CodeMakerUtil.getScalaClassFields(scalaClass));
-            classEntry.setImportList(CodeMakerUtil.getScalaImportList((ScalaFile)psiFile));
         }
 
 

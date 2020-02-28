@@ -6,7 +6,7 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.4.10'
+    id 'org.jetbrains.intellij' version '0.4.16'
 }
 
 apply plugin:'java'
@@ -18,6 +18,8 @@ sourceCompatibility = 1.8
 repositories {
     mavenLocal()
     mavenCentral()
+    jcenter()
+    maven {url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
 }
 
 dependencies {
@@ -30,11 +32,18 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version 'IC-2019.2.2'
+    version '191.8026.42'
+    type "IC"
     pluginName 'PluginTest'
-    updateSinceUntilBuild false
+//    updateSinceUntilBuild false
     //fuck 加上这句就消除了PsiClass异常 不知为何
-    plugins = ["org.intellij.scala:2019.2.2", 'java']
+//    plugins = ["org.intellij.scala:191.8026.42", 'android']
+    plugins 'android'
+}
+runIde {
+    // Absolute path to installed target v3.5 Android Studio to use as IDE Development Instance
+    // The "Contents" directory is macOS specific.
+    ideDirectory '/Applications/Android Studio.app/Contents'
 }
 patchPluginXml {
     changeNotes """

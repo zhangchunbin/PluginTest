@@ -13,18 +13,12 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtilBase;
 import entity.ClassEntry;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.plugins.scala.lang.psi.api.ScalaFile;
-import org.jetbrains.plugins.scala.lang.psi.api.statements.params.ScClassParameter;
-import org.jetbrains.plugins.scala.lang.psi.api.toplevel.imports.ScImportStmt;
-import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef.ScClass;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static scala.collection.JavaConversions.asJavaIterator;
-import static scala.collection.JavaConversions.seqAsJavaList;
 
 /**
  * @author hansong.xhs
@@ -74,12 +68,6 @@ public class CodeMakerUtil {
             .map(PsiImportStatement::getQualifiedName).collect(Collectors.toList());
     }
 
-    public static List<String> getScalaImportList(ScalaFile scalaFile) {
-        List<ScImportStmt> scImportStmts = seqAsJavaList(scalaFile.getImportStatements());
-        return scImportStmts.stream()
-            .flatMap(stmt -> seqAsJavaList(stmt.importExprs()).stream().map(PsiElement::getText))
-            .collect(Collectors.toList());
-    }
 
     public static List<ClassEntry.Field> getFields(PsiClass psiClass) {
         return Arrays.stream(psiClass.getFields())
@@ -172,14 +160,6 @@ public class CodeMakerUtil {
         return true;
     }
 
-    public static List<ClassEntry.Field> getScalaClassFields(ScClass scalaClass) {
-        return Lists.newArrayList(asJavaIterator(scalaClass.allVals())).stream()
-            .filter(ts -> ts.namedElement() instanceof ScClassParameter).map(ts -> {
-                ScClassParameter val = (ScClassParameter) ts.namedElement();
-                return new ClassEntry.Field(val.paramType().get().getText(), val.name(),
-                    val.getModifierList().getText(), "");
-            }).collect(Collectors.toList());
-    }
 
     public static List<String> getClassTypeParameters(PsiClass psiClass) {
         return Arrays.stream(psiClass.getTypeParameters()).map(PsiNamedElement::getName)
